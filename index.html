@@ -1,0 +1,1349 @@
+<?php
+// builder.php - Página do Construtor de Lições
+
+// --- 1. LESSON DATA (The Core Content - agora em PHP, para futura integração com SQLite) ---
+// Em um cenário real com SQLite, você faria uma consulta aqui para buscar os dados da lição.
+// Por enquanto, simulamos com um array PHP.
+$lessons_data = [
+    1 => [
+        'id' => 1,
+        'expression' => 'I am beat',
+        'title' => 'Daily Expression: I am Beat!',
+        'focus' => 'Informal Expressions of Fatigue',
+        'meaning_pt' => 'Estou exausto / muito cansado',
+        'literal_translation' => 'Eu estou batido',
+        'context_explanation' => 'Usamos "I am beat" para expressar que estamos extremamente cansados, exaustos, como se tivéssemos sido "derrotados" pelo cansaço. É uma forma mais informal e enfática de dizer "I am very tired".',
+        'brazilian_analogy' => 'Pense em "Estou morto de cansaço", "Estou acabado" ou "Estou moído".',
+        'typical_scenario_pt' => 'Trabalhei demais no sol do Rio hoje. **I am beat**!',
+        'grammar_focus' => 'Estrutura: Subject + verb "to be" + beat (usado como adjetivo). Ex: I am beat, You are beat, He is beat. Não confunda com o verbo "to beat".',
+        'common_mistake' => '"I am very tired, I will go to bed." (Correto, mas básico).',
+        'native_say' => "I'm totally **beat**, I'm heading home.",
+        'example_sentences' => [
+            'After running the marathon, I was completely beat.',
+            'I worked 12 hours today. I am beat!',
+            'Can we just relax tonight? I am beat from cleaning all day.',
+            'He looks totally beat after his trip.',
+        ],
+        'synonyms' => [
+            "I'm exhausted (Exausto, mais formal)",
+            "I'm worn out (Esgotado, bom para uso diário)",
+            "I'm wiped out (Destruído, muito informal)",
+            "I am bits (Novo, informal/gíria)"
+        ],
+        'etymology' => 'A expressão "beat" tem uma origem incerta, mas é usada em contextos de esporte e competição desde o século XIX, onde significava ser "derrotado" ou "esmagado". O sentido de "exausto" é uma extensão natural: a fadiga "derrotou" a pessoa.',
+        'dialogue' => [
+            ['speaker' => 'Liam', 'english_line' => "Hey, are you coming to the gym with us?", 'portuguese_line' => "Ei, você vem para a academia conosco?"],
+            ['speaker' => 'Sarah', 'english_line' => "I wish I could, but I am beat! I worked a double shift.", 'portuguese_line' => "Eu queria, mas estou exausta! Eu trabalhei em turno duplo."],
+            ['speaker' => 'Liam', 'english_line' => "Ah, I get it. Hit the hay early then!", 'portuguese_line' => "Ah, entendi. Vá dormir cedo então!"]
+        ],
+        'gamification_question' => "Complete a frase: Depois de um dia longo, eu estou ______.",
+        'gamification_answer' => 'beat',
+        'gamification_hint' => 'Pense na expressão que significa "muito cansado".',
+        'contextual_match' => [
+            'question' => "Em qual cenário a expressão 'I am beat' seria mais apropriada?",
+            'options' => [
+                ['text' => "Acabei de ganhar na loteria!", 'correct' => false],
+                ['text' => "Passei a noite inteira estudando para o exame final.", 'correct' => true],
+                ['text' => "Estou ansioso para começar o trabalho.", 'correct' => false]
+            ],
+            'correct_index' => 1
+        ],
+        'production_prompt' => "Escreva uma frase que você usaria hoje para dizer que está extremamente cansado.",
+        'scenario_english_q' => "Your boss asks if you can take on an extra project right now, but you just finished a 10-hour shift. What is your polite, but informal, reply using the expression?",
+        'scenario_english_a' => "I'm sorry, but I am beat. Can we talk about this tomorrow?",
+        'translation_challenge_1_q' => "Traduza para o inglês, usando a expressão de hoje: 'Estou exausto depois de cortar a grama o dia todo!'",
+        'translation_challenge_1_a' => "I am beat after mowing the lawn all day!",
+        'translation_challenge_2_q' => "Traduza para o inglês, usando a expressão de hoje: 'Ele parecia totalmente esgotado depois daquela viagem de negócios de três dias.'",
+        'translation_challenge_2_a' => "He looked totally beat after that three-day business trip."
+    ],
+    2 => [
+        'id' => 2,
+        'expression' => "I'm hitting the hay",
+        'title' => "Daily Expression: I'm Hitting the Hay!",
+        'focus' => 'Informal Expressions of Sleep',
+        'meaning_pt' => 'Vou dormir / Vou para a cama / Vou me deitar',
+        'literal_translation' => 'Eu estou batendo no feno',
+        'context_explanation' => 'This idiom means "I am going to bed." The phrase comes from the time when hay (haystacks) was often used as bedding. It is a very common and informal way to announce you are going to sleep.',
+        'brazilian_analogy' => 'Pense em "Vou capotar" ou "Vou apagar".',
+        'typical_scenario_pt' => 'Não aguento mais esse seriado. Vou **I\'m hitting the hay**!',
+        'grammar_focus' => "Structure: Subject + verb 'to be' + verb 'hitting' + the hay. 'Hitting the hay' is the fixed idiomatic verb phrase.",
+        'common_mistake' => '"I go to sleep now, I am very tired." (Correto, mas literal).',
+        'native_say' => "I'm totally beat, so I'm **hitting the hay** early tonight.",
+        'example_sentences' => [
+            'It’s midnight; I think I’ll hit the hay.',
+            "I have an early flight tomorrow, so I'm hitting the hay now.",
+            'She looks like she needs to hit the hay.',
+            'Let’s watch one more episode, then I’m hitting the hay.',
+        ],
+        'synonyms' => [
+            "I'm going to bed (Formal/Standard)",
+            "I'm crashing (Informal, often implies immediate need for sleep)",
+            "I'm turning in (Slightly less informal)",
+            "I'm going to sleep"
+        ],
+        'etymology' => 'A frase é uma metáfora rural que remonta ao século XVII. Antes de colchões modernos, as pessoas dormiam em sacos de tecido preenchidos com feno (hay). Ir para a cama significava literalmente "bater no feno" para torná-lo mais confortável.',
+        'dialogue' => [
+            ['speaker' => 'Mark', 'english_line' => "It’s getting late. I'm hitting the hay.", 'portuguese_line' => "Está ficando tarde. Eu vou para a cama."],
+            ['speaker' => 'Chloe', 'english_line' => "Already? But the movie just started!", 'portuguese_line' => "Já? Mas o filme acabou de começar!"],
+            ['speaker' => 'Mark', 'english_line' => "I know, but I'm totally beat and need to be up at six.", 'portuguese_line' => "Eu sei, mas estou totalmente exausto e preciso acordar às seis."]
+        ],
+        'gamification_question' => "Complete a frase: It's late and I'm exhausted, time to ______.",
+        'gamification_answer' => 'hit the hay',
+        'gamification_hint' => 'Pense na expressão para ir dormir.',
+        'contextual_match' => [
+            'question' => "Em qual cenário a expressão 'I\'m hitting the hay' é tipicamente usada?",
+            'options' => [
+                ['text' => "Quando você está saindo para uma festa.", 'correct' => false],
+                ['text' => "Quando você está anunciando que vai se deitar para dormir.", 'correct' => true],
+                ['text' => "Quando você está comendo feno.", 'correct' => false]
+            ],
+            'correct_index' => 1
+        ],
+        'production_prompt' => "Escreva uma frase que você usaria para se despedir dos amigos e anunciar que vai dormir.",
+        'scenario_english_q' => "Your roommate wants to watch one more movie, but it's 2 AM and you have an early start. How do you tell them you're leaving the room and going to bed?",
+        'scenario_english_a' => "That movie sounds great, but I'm hitting the hay right now.",
+        'translation_challenge_1_q' => "Traduza para o inglês, usando a expressão de hoje: 'Vou me deitar cedo hoje, porque tenho que acordar antes do sol nascer.'",
+        'translation_challenge_1_a' => "I'm hitting the hay early tonight, because I have to wake up before sunrise.",
+        'translation_challenge_2_q' => "Traduza para o inglês, usando a expressão de hoje: 'É melhor eu ir para a cama; já passa da meia-noite.'",
+        'translation_challenge_2_a' => "I'd better hit the hay; it's already past midnight."
+    ]
+];
+
+// Injetar a API_KEY do ambiente (Railway.app ou similar)
+// Isso é mais seguro do que hardcoding no JS.
+$api_key = getenv('GEMINI_API_KEY') ?: 'YOUR_GEMINI_API_KEY_HERE'; // Substitua 'YOUR_GEMINI_API_KEY_HERE' por uma chave real ou configure a variável de ambiente.
+
+// Variáveis de configuração do Firebase (serão injetadas no JS)
+// Estes valores devem vir de variáveis de ambiente ou de um arquivo de configuração seguro.
+// Para este exemplo, estou usando placeholders. Você precisará preenchê-los.
+$firebase_config = [
+    'apiKey'            => getenv('FIREBASE_API_KEY') ?: 'YOUR_FIREBASE_API_KEY',
+    'authDomain'        => getenv('FIREBASE_AUTH_DOMAIN') ?: 'YOUR_FIREBASE_AUTH_DOMAIN',
+    'projectId'         => getenv('FIREBASE_PROJECT_ID') ?: 'YOUR_FIREBASE_PROJECT_ID',
+    'storageBucket'     => getenv('FIREBASE_STORAGE_BUCKET') ?: 'YOUR_FIREBASE_STORAGE_BUCKET',
+    'messagingSenderId' => getenv('FIREBASE_MESSAGING_SENDER_ID') ?: 'YOUR_FIREBASE_MESSAGING_SENDER_ID',
+    'appId'             => getenv('FIREBASE_APP_ID') ?: 'YOUR_FIREBASE_APP_ID',
+    'measurementId'     => getenv('FIREBASE_MEASUREMENT_ID') ?: 'YOUR_FIREBASE_MEASUREMENT_ID',
+];
+$app_id = getenv('FIREBASE_APP_ID') ?: 'default-app-id'; // Usado para o path no Firestore
+$initial_auth_token = getenv('FIREBASE_CUSTOM_AUTH_TOKEN') ?: null; // Se você tiver um token customizado
+
+// Funções auxiliares para renderização (mantidas em PHP para consistência e clareza)
+function renderLessonBlock($title, $content) {
+    return '
+        <div class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+            <h3 class="text-xl font-semibold text-purple-400 mb-3">' . $title . '</h3>
+            <p class="text-gray-300 leading-relaxed">' . nl2br(htmlspecialchars($content)) . '</p>
+        </div>
+    ';
+}
+
+function renderExampleSentences($sentences) {
+    $listItems = '';
+    foreach ($sentences as $s) {
+        $listItems .= '<li class="mb-2">' . htmlspecialchars($s) . '</li>';
+    }
+    return '
+        <div class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+            <h3 class="text-xl font-semibold text-purple-400 mb-3">🎬 5. Real-Life Scenarios and Examples</h3>
+            <ul class="list-none text-gray-300 animated-bullets">
+                ' . $listItems . '
+            </ul>
+        </div>
+    ';
+}
+
+function renderSynonyms($synonyms) {
+    $listItems = '';
+    foreach ($synonyms as $s) {
+        // Split the string to highlight the expression part
+        $parts = explode('(', $s, 2);
+        $expressionPart = htmlspecialchars(trim($parts[0]));
+        $explanationPart = isset($parts[1]) ? '(' . htmlspecialchars($parts[1]) : '';
+        $listItems .= '<li><span class="font-bold text-yellow-300">' . $expressionPart . '</span> ' . $explanationPart . '</li>';
+    }
+    return '
+        <div class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+            <h3 class="text-xl font-semibold text-purple-400 mb-3">🔗 6. Related Expressions and Synonyms</h3>
+            <p class="text-gray-300 leading-relaxed">To expand your vocabulary, here are other ways to express it, from formal to highly informal:</p>
+            <ul class="list-disc list-inside mt-3 ml-4 space-y-1 text-gray-300">
+                ' . $listItems . '
+            </ul>
+        </div>
+    ';
+}
+
+function renderDialogueBlock($dialogue, $lessonId) {
+    $dialogueHtml = '';
+    foreach ($dialogue as $index => $line) {
+        $speakerClass = ($index % 2 == 0) ? 'speaker-a' : 'speaker-b';
+        // Usar json_encode para passar strings com aspas para o JS
+        $englishLineJson = json_encode($line['english_line']);
+        $dialogueHtml .= '
+            <div class="dialogue-box flex items-center p-4 ' . $speakerClass . '">
+                <div class="flex-grow">
+                    <p class="font-bold text-lg mb-1">' . htmlspecialchars($line['speaker']) . ':</p>
+                    <p class="text-xl">' . htmlspecialchars($line['english_line']) . '</p>
+                    <p id="translation-' . $lessonId . '-' . $index . '" class="text-sm italic text-gray-300 mt-1 hidden">' . htmlspecialchars($line['portuguese_line']) . '</p>
+                </div>
+                <div class="flex-shrink-0 ml-4 space-x-2">
+                    <button onclick="window.playExpression(' . $englishLineJson . ', \'dialogue-play-' . $lessonId . '-' . $index . '\')" id="dialogue-play-' . $lessonId . '-' . $index . '" class="px-3 py-1 bg-purple-700 text-white rounded-full text-sm hover:bg-purple-800 transition duration-150">▶️</button>
+                    <button onclick="window.toggleTranslation(\'' . $lessonId . '-' . $index . '\')" class="px-3 py-1 bg-indigo-700 text-white rounded-full text-sm hover:bg-indigo-800 transition duration-150">PT</button>
+                </div>
+            </div>
+        ';
+    }
+    return '
+        <div class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+            <h3 class="text-xl font-semibold text-purple-400 mb-3">🗣️ 8. Interactive Mini-Dialogue</h3>
+            <p class="text-gray-300 leading-relaxed mb-4">Ouça e pratique a expressão em um contexto de conversa real.</p>
+            <div class="space-y-4">
+                ' . $dialogueHtml . '
+            </div>
+        </div>
+    ';
+}
+
+function renderEtymologyBlock($etymology) {
+    return '
+        <div class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+            <h3 class="text-xl font-semibold text-purple-400 mb-3">💡 10. Curiosities and Origin of the Expression</h3>
+            <p class="text-gray-300 leading-relaxed">' . nl2br(htmlspecialchars($etymology)) . '</p>
+        </div>
+    ';
+}
+
+function renderDailyChallengeBlock($lessonId) {
+    // A lógica de `isCompleted` será tratada no JS via Firestore
+    return '
+        <div id="exercise-11" class="lesson-block bg-gradient-to-br from-purple-900 to-indigo-900 p-6 rounded-xl shadow-2xl border-2 border-yellow-400 text-white">
+            <h4 class="text-2xl font-bold text-yellow-300 mb-3 flex items-center">🔥 11. Missão de Aplicação Real</h4>
+            <p class="text-gray-100 mb-4 text-lg font-light">
+                <strong>Desafio Diário:</strong> Use a expressão de hoje (<span class="font-bold text-yellow-300" id="challenge-expression-' . $lessonId . '"></span>) em uma conversa real (com um colega, amigo, ou até mesmo pensando em voz alta).
+                <br>
+                <span class="text-sm italic">Registre sua experiência e sinta o progresso.</span>
+            </p>
+            <textarea id="challenge-input-' . $lessonId . '" rows="3" class="w-full p-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-4 focus:ring-yellow-500 transition duration-150" placeholder="Ex: \'I tried saying I was beat, and my friend understood immediately!\'"></textarea>
+            <button onclick="window.completeChallenge(\'' . $lessonId . '\')" id="complete-challenge-button-' . $lessonId . '" class="mt-4 w-full md:w-auto px-8 py-3 bg-yellow-400 text-gray-900 font-extrabold rounded-lg hover:bg-yellow-300 transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
+                Concluir Missão (+50 Pontos)
+            </button>
+            <p id="challenge-feedback-' . $lessonId . '" class="mt-4 text-lg font-semibold text-white"></p>
+        </div>
+    ';
+}
+
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="app-title">RealTalk Daby (Corporate Edition) - Daily Expression</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for dark mode and fonts */
+        body {
+            font-family: 'Verdana', 'Segoe UI', Tahoma, Geneva, sans-serif; /* Simula um estilo de escrita mais limpo */
+            background-color: #030712; /* Deeper Dark background */
+            color: #e5e7eb; /* Light text */
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .highlight {
+            background-color: #4c1d95; /* Accent color (Dark Purple) */
+            color: #fcd34d; /* Yellow text for highlights */
+            padding: 0.2em 0.5em;
+            border-radius: 0.3em;
+            display: inline-block;
+            font-weight: 600;
+        }
+        /* Animation for bullet points */
+        ul.animated-bullets li::before {
+            content: '💬'; /* Chat/message icon */
+            margin-right: 0.5em;
+            animation: bounce 1s infinite alternate;
+            color: #a78bfa; /* Light Purple color */
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-3px); }
+        }
+        .loader {
+            border: 4px solid #3b82f6;
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        .loader-lg { /* Loader para o dashboard */
+            border: 6px solid #3b82f6;
+            border-top: 6px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .option-button {
+            transition: all 0.2s;
+        }
+        .option-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(76, 29, 149, 0.5);
+        }
+        .correct-answer {
+            background-color: #15803d !important; /* Green 700 */
+        }
+        .incorrect-answer {
+            background-color: #b91c1c !important; /* Red 700 */
+        }
+
+        /* --- NEW ANIMATION STYLES FOR GAMIFICATION --- */
+        .shake {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        /* Success/Confetti Simulation: A dramatic flash effect */
+        .confetti-flash {
+            animation: success-flash 0.4s ease-out;
+            box-shadow: 0 0 15px 5px #fcd34d, 0 0 5px 2px #a78bfa;
+        }
+        @keyframes success-flash {
+            0% { opacity: 0.5; transform: scale(1.0); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 1; transform: scale(1.0); }
+        }
+
+        /* Dialogue Box Styling */
+        .dialogue-box {
+            background-color: #1f2937; /* Darker gray for the box */
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex; /* Para alinhar o texto e os botões */
+            align-items: center; /* Centraliza verticalmente */
+        }
+        .speaker-a {
+            background-color: #312e81; /* Indigo 800 */
+            color: #eef2ff;
+            border-radius: 0.75rem 0.75rem 0.1rem 0.75rem;
+        }
+        .speaker-b {
+            background-color: #8338ec; /* Custom Purple/Fuchsia */
+            color: white;
+            border-radius: 0.75rem 0.75rem 0.75rem 0.1rem;
+        }
+        /* Loader/Indicator for Dashboard */
+        .progress-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        /* Custom styles for dropdowns in dark mode */
+        select, option {
+            background-color: #1f2937; /* Darker gray */
+            color: #e5e7eb; /* Light text */
+            border: 1px solid #4b5563; /* Gray 600 */
+        }
+        select:focus, option:hover {
+            background-color: #374151; /* Even darker gray on focus/hover */
+            border-color: #a78bfa; /* Light purple ring */
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    <!-- STATIC TOP HEADER BANNER: Daily Expression - live English as it is -->
+    <header class="w-full bg-gray-900 border-b-2 border-yellow-300 shadow-2xl py-3 mb-4">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-yellow-300 tracking-wider uppercase">
+                Daily Expression - live English as it is
+            </h2>
+        </div>
+    </header>
+    <!-- END STATIC TOP HEADER BANNER -->
+
+    <div class="container">
+        <!-- Dashboard de Progresso do Aluno (Gamificação) -->
+        <div id="progress-dashboard" class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-700 mb-8">
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4 flex items-center">
+                ✨ Seu Progresso no RealTalk Daby
+            </h2>
+            <div id="progress-loading-indicator" class="progress-loading">
+                <div class="loader-lg"></div>
+                <p class="ml-4 text-gray-400">Carregando progresso...</p>
+            </div>
+            <div id="progress-content" class="grid grid-cols-3 gap-4 text-center hidden">
+
+                <!-- Nível de Fluência -->
+                <div class="p-3 bg-gray-900 rounded-lg">
+                    <p class="text-sm text-gray-400 uppercase">Nível de Fluência</p>
+                    <p class="text-xl font-bold text-purple-400 mt-1" id="fluency-level">Carregando...</p>
+                    <div class="mt-2 h-2 bg-gray-600 rounded-full">
+                        <div class="h-2 bg-green-500 rounded-full" id="fluency-progress" style="width: 0%;"></div>
+                    </div>
+                    <p class="text-xs text-green-400 mt-1" id="fluency-target">Carregando...</p>
+                </div>
+
+                <!-- Expressões Dominadas -->
+                <div class="p-3 bg-gray-900 rounded-lg">
+                    <p class="text-sm text-gray-400 uppercase">Expressões Dominadas</p>
+                    <p class="text-xl font-bold text-yellow-400 mt-1 flex justify-center items-center">
+                        <span class="mr-2">⭐</span> <span id="mastered-count">0</span> / 11000
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1" id="user-id-display">ID: Não autenticado</p>
+                </div>
+
+                <!-- Pontos Acumulados -->
+                <div class="p-3 bg-gray-900 rounded-lg">
+                    <p class="text-sm text-gray-400 uppercase">Pontos Acumulados</p>
+                    <p class="text-xl font-bold text-cyan-400 mt-1 flex justify-center items-center">
+                        <span class="mr-2">💰</span> <span id="points-count">0</span>
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1" id="next-reward-target">Carregando...</p>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Dashboard -->
+
+        <!-- Card de Destaque - "Expressão do Dia" -->
+        <div id="expression-card" class="mb-10 p-6 rounded-xl shadow-2xl bg-gradient-to-r from-purple-800 to-indigo-900 border border-purple-500">
+            <header class="text-center">
+                <p class="text-sm font-semibold uppercase text-purple-200 mb-2">Expressão do Dia (Review)</p>
+                <h1 class="text-6xl font-black text-yellow-300 mb-2 leading-tight" id="card-expression">
+                    Carregando...
+                </h1>
+                <p class="text-xl text-indigo-200 italic mb-4" id="card-meaning">
+                    Significado: Carregando...
+                </p>
+                <button onclick="window.loadLesson(1); return false;" class="px-6 py-3 bg-yellow-400 text-gray-900 font-bold rounded-full hover:bg-yellow-300 transition duration-300 transform hover:scale-105 shadow-lg">
+                    Aprender Mais
+                </button>
+            </header>
+        </div>
+        <!-- Fim do Card de Destaque -->
+
+        <!-- Navigation Bar -->
+        <nav class="flex overflow-x-auto p-4 bg-gray-900 border-b border-purple-800 shadow-xl mb-8 rounded-xl">
+            <div class="flex space-x-4 mx-auto">
+                <?php foreach ($lessons_data as $lesson): ?>
+                    <a href="#" onclick="window.loadLesson(<?php echo $lesson['id']; ?>); return false;" id="nav-<?php echo $lesson['id']; ?>" 
+                       class="flex-shrink-0 px-4 py-2 rounded-full font-medium transition duration-300 ease-in-out 
+                              <?php echo ($lesson['id'] == 1) ? 'bg-purple-600 text-white' : 'bg-gray-700 text-purple-300 hover:bg-purple-500 hover:text-white'; ?>">
+                        Lesson <?php echo $lesson['id']; ?>: <?php echo htmlspecialchars($lesson['expression']); ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </nav>
+
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-extrabold text-purple-400 mb-2 hidden" id="lesson-expression">
+                <!-- Expression moved to card -->
+            </h1>
+            <p class="text-xl text-gray-400 italic hidden" id="lesson-title">
+                <!-- Title moved to card -->
+            </p>
+        </header>
+
+        <div id="lesson-content" class="space-y-8">
+            <!-- Content will be rendered here by JavaScript -->
+        </div>
+
+        <footer class="mt-12 text-center text-gray-500 text-sm border-t border-gray-800 pt-6">
+            <p>RealTalk Daby (Corporate Edition) - Building practical fluency, one expression at a time.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Injetar dados do PHP para o JavaScript
+        // Isso permite que o JS acesse as lições e as configurações de forma segura.
+        const LESSONS_DATA = <?php echo json_encode($lessons_data); ?>;
+        const API_KEY = "<?php echo htmlspecialchars($api_key); ?>";
+        const FIREBASE_CONFIG = <?php echo json_encode($firebase_config); ?>;
+        const APP_ID = "<?php echo htmlspecialchars($app_id); ?>";
+        const INITIAL_AUTH_TOKEN = <?php echo json_encode($initial_auth_token); ?>;
+
+        // Definir POINTS_PER_QUIZ e POINTS_PER_CHALLENGE aqui, ou injetar via PHP também
+        const POINTS_PER_QUIZ = 10;
+        const POINTS_PER_CHALLENGE = 50;
+
+        // Placeholder para a função loadLesson, que será definida no módulo
+        // Isso permite que o onload do body a chame, e o módulo a sobrescreva.
+        window.loadLesson = function(id) {
+            console.log("loadLesson called before module is fully loaded for lesson:", id);
+            // Pode adicionar um loader aqui se quiser
+        };
+    </script>
+
+    <script type="module">
+        // Importações do Firebase
+        // Use uma versão estável e mais recente, como 10.6.0 ou superior.
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, updateDoc, onSnapshot, getDoc, runTransaction, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+        // setLogLevel não é mais exportado de firebase-app-check. Removido.
+
+        // Variáveis globais de ambiente (agora injetadas pelo PHP)
+        const appId = APP_ID;
+        const firebaseConfig = FIREBASE_CONFIG;
+        const initialAuthToken = INITIAL_AUTH_TOKEN;
+
+        let app, db, auth;
+        let userId = null;
+        let isAuthReady = false;
+        let progressDocRef = null;
+        let masteredLessons = {}; // Para controlar quais lições o usuário já dominou (evitar pontos duplicados)
+        let activeLessonId = 1; // Para manter o controle da lição ativa
+
+        // --- 1. FIREBASE SETUP & PROGRESS DASHBOARD LOGIC ---
+
+        // Configura os níveis de fluência
+        const FLUENCY_LEVELS = [
+            { name: "Iniciante", minPoints: 0, maxPoints: 500 },
+            { name: "Intermediário", minPoints: 501, maxPoints: 1500 },
+            { name: "Avançado", minPoints: 1501, maxPoints: 99999 } // Max points é alto para o nível final
+        ];
+
+        // Inicializa o Firebase e a Autenticação
+        async function setupFirebase() {
+            if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_FIREBASE_API_KEY') {
+                console.warn("Firebase config not fully available or API Key is placeholder. Running in non-persistent mode for progress.");
+                // Esconde o dashboard se o Firebase não estiver configurado
+                document.getElementById('progress-dashboard').classList.add('hidden');
+                // Ainda carrega a lição, mas sem funcionalidade de progresso
+                window.loadLesson(activeLessonId);
+                return;
+            }
+
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Tenta habilitar persistência offline (opcional, mas bom para UX)
+                try {
+                    await enableIndexedDbPersistence(db);
+                    console.log("Offline persistence enabled.");
+                } catch (err) {
+                    if (err.code == 'failed-precondition') {
+                        console.warn("Multiple tabs open, persistence could not be enabled.");
+                    } else if (err.code == 'unimplemented') {
+                        console.warn("The current browser does not support all of the features required to enable persistence.");
+                    } else {
+                        console.error("Error enabling persistence:", err);
+                    }
+                }
+
+                // Autenticação: tenta usar o token customizado, senão assina anonimamente.
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        isAuthReady = true;
+                        document.getElementById('user-id-display').textContent = `ID: ${userId.substring(0, 8)}...`;
+
+                        // Define a referência do documento de progresso
+                        progressDocRef = doc(db, `artifacts/${appId}/users/${userId}/progress`, 'userProgress');
+
+                        // Inicia o listener em tempo real
+                        startProgressListener();
+                        // Carrega a primeira lição após a autenticação
+                        window.loadLesson(activeLessonId);
+
+                    } else {
+                        console.log("Usuário deslogado.");
+                        isAuthReady = false;
+                        // Se não houver usuário, ainda podemos carregar a lição, mas sem salvar progresso
+                        window.loadLesson(activeLessonId);
+                    }
+                });
+
+            } catch (error) {
+                console.error("Erro ao inicializar Firebase ou autenticar:", error);
+                // Em caso de erro, ainda tenta carregar a lição
+                window.loadLesson(activeLessonId);
+            }
+        }
+
+        // Função para iniciar o listener de progresso do Firestore
+        function startProgressListener() {
+            if (!isAuthReady || !progressDocRef) return;
+
+            // Escuta em tempo real o documento de progresso
+            onSnapshot(progressDocRef, (docSnap) => {
+                let data;
+                if (docSnap.exists()) {
+                    data = docSnap.data();
+                } else {
+                    // Documento não existe, cria o estado inicial
+                    data = { points: 0, masteredCount: 0, lessonsCompleted: {} };
+                    // Tenta criar o documento com o estado inicial
+                    setDoc(progressDocRef, data).catch(e => console.error("Erro ao criar doc inicial:", e));
+                }
+
+                // Atualiza o cache de lições completadas
+                masteredLessons = data.lessonsCompleted || {};
+
+                updateProgressUI(data);
+
+                // Esconde o loading e mostra o conteúdo
+                document.getElementById('progress-loading-indicator').classList.add('hidden');
+                document.getElementById('progress-content').classList.remove('hidden');
+
+            }, (error) => {
+                console.error("Erro no listener do Firestore:", error);
+            });
+        }
+
+        // Função para atualizar o UI com os dados do Firestore
+        function updateProgressUI(data) {
+            const points = data.points || 0;
+            const masteredCount = data.masteredCount || 0;
+
+            document.getElementById('points-count').textContent = points;
+            document.getElementById('mastered-count').textContent = masteredCount;
+            document.getElementById('next-reward-target').textContent = `Próxima recompensa em ${Math.ceil((points + 1) / 1000) * 1000}`; // Garante que o próximo target seja sempre maior
+
+            // Lógica do Nível de Fluência
+            let currentLevel = FLUENCY_LEVELS[0];
+            let nextLevel = null;
+            for (let i = 0; i < FLUENCY_LEVELS.length; i++) {
+                if (points >= FLUENCY_LEVELS[i].minPoints) {
+                    currentLevel = FLUENCY_LEVELS[i];
+                    if (i + 1 < FLUENCY_LEVELS.length) {
+                        nextLevel = FLUENCY_LEVELS[i + 1];
+                    } else {
+                        nextLevel = null; // Já está no nível máximo
+                    }
+                } else {
+                    break;
+                }
+            }
+
+            document.getElementById('fluency-level').textContent = currentLevel.name;
+
+            let percent = 0;
+            let targetText = '';
+
+            if (currentLevel.name === 'Avançado') {
+                percent = 100;
+                targetText = 'Nível Máximo Atingido! 🚀';
+                document.getElementById('fluency-target').classList.remove('text-green-400');
+                document.getElementById('fluency-target').classList.add('text-yellow-400');
+            } else if (nextLevel) {
+                const levelRange = nextLevel.maxPoints - currentLevel.minPoints; // Usar maxPoints do próximo nível para o range total
+                const pointsInLevel = points - currentLevel.minPoints;
+                percent = (pointsInLevel / (nextLevel.minPoints - currentLevel.minPoints)) * 100; // Correção no cálculo da porcentagem
+                targetText = `${(nextLevel.minPoints - points)} pontos para ${nextLevel.name}`;
+                document.getElementById('fluency-target').classList.add('text-green-400');
+                document.getElementById('fluency-target').classList.remove('text-yellow-400');
+            } else { // Fallback para o caso de não haver próximo nível (embora 'Avançado' já cubra)
+                percent = 100;
+                targetText = 'Nível Final';
+                document.getElementById('fluency-target').classList.add('text-green-400');
+                document.getElementById('fluency-target').classList.remove('text-yellow-400');
+            }
+
+            document.getElementById('fluency-progress').style.width = `${Math.min(percent, 100)}%`;
+            document.getElementById('fluency-target').textContent = targetText;
+
+            // Atualiza o estado do botão de desafio diário da lição ativa
+            if (activeLessonId) {
+                updateDailyChallengeButtonState(activeLessonId);
+            }
+        }
+
+        // Função para adicionar pontos e/ou atualizar a contagem de lições dominadas no Firestore
+        async function updateProgress(pointsToAdd, quizId, isMastered = false) {
+            if (!isAuthReady || !progressDocRef) {
+                console.warn("Firestore não está pronto. Pontos não salvos.");
+                return;
+            }
+
+            try {
+                // Usa runTransaction para garantir atomicidade na leitura e escrita
+                await runTransaction(db, async (transaction) => {
+                    const docSnap = await transaction.get(progressDocRef);
+                    let data = docSnap.exists() ? docSnap.data() : { points: 0, masteredCount: 0, lessonsCompleted: {} };
+
+                    // 1. Atualiza Pontos
+                    data.points = (data.points || 0) + pointsToAdd;
+
+                    // 2. Atualiza Lições Dominadas (se aplicável)
+                    if (isMastered && quizId && !data.lessonsCompleted?.[quizId]) { // Usar quizId para marcar como completado
+                        // Marca o quiz como completado para evitar pontos duplicados
+                        if (!data.lessonsCompleted) data.lessonsCompleted = {};
+                        data.lessonsCompleted[quizId] = true;
+                        // A contagem de masteredCount deve ser para lições completas, não para cada quiz.
+                        // Se cada quiz de uma lição contribui para "mastered", então a lógica precisa ser mais complexa.
+                        // Por enquanto, vamos considerar que 'masteredCount' é o número de quizzes únicos completados.
+                        data.masteredCount = (data.masteredCount || 0) + 1;
+                    }
+
+                    transaction.set(progressDocRef, data);
+                });
+                console.log(`Progresso atualizado: +${pointsToAdd} pontos. Quiz ${quizId} Mastered: ${isMastered}`);
+
+            } catch (e) {
+                console.error("Erro ao executar a transação do progresso:", e);
+            }
+        }
+
+        // Inicializa o Firebase quando o script for carregado
+        setupFirebase();
+
+        // --- 2. LESSON DATA (Agora vem do PHP) ---
+        // A constante LESSONS_DATA é definida no script anterior (não-módulo)
+        // e está disponível aqui.
+
+        // --- 3. AUDIO (TTS) API LOGIC ---
+        const TTS_MODEL = "gemini-1.5-flash-preview-0514"; // Modelo mais recente e estável para TTS
+        const TTS_VOICE = "Kore";
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${TTS_MODEL}:generateContent?key=${API_KEY}`;
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        let audioContext = null;
+        let currentAudioSource = null;
+
+        async function playExpression(text, buttonId, retryCount = 0) {
+            const button = document.getElementById(buttonId);
+            if (button) {
+                button.disabled = true;
+                button.textContent = '🔊'; // Ícone de carregamento
+            }
+
+            if (currentAudioSource) {
+                currentAudioSource.stop();
+                currentAudioSource = null;
+            }
+
+            try {
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: text
+                            }]
+                        }],
+                        generationConfig: {
+                            responseMimeType: "audio/wav",
+                            audioConfig: {
+                                audioEncoding: "LINEAR16",
+                                sampleRateHertz: 24000,
+                                speakingRate: 1.0,
+                                pitch: 0.0,
+                                volumeGainDb: 0.0,
+                                effectsProfileId: [],
+                                voice: {
+                                    name: TTS_VOICE,
+                                    // gender: "FEMALE" // Removido, pois nem todas as vozes têm essa propriedade ou é necessária
+                                }
+                            }
+                        }
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorBody = await response.text();
+                    console.error(`HTTP error! status: ${response.status}, body: ${errorBody}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const audioBase64 = data.candidates[0].content.parts[0].text;
+                const audioBuffer = base64ToArrayBuffer(audioBase64);
+
+                audioContext.decodeAudioData(audioBuffer, (buffer) => {
+                    currentAudioSource = audioContext.createBufferSource();
+                    currentAudioSource.buffer = buffer;
+                    currentAudioSource.connect(audioContext.destination);
+                    currentAudioSource.start(0);
+                    currentAudioSource.onended = () => {
+                        if (button) {
+                            button.disabled = false;
+                            button.textContent = '▶️';
+                        }
+                    };
+                }, (e) => {
+                    console.error("Error decoding audio data", e);
+                    if (button) {
+                        button.disabled = false;
+                        button.textContent = '▶️';
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error playing expression:", error);
+                if (retryCount < 3) { // Tenta novamente até 3 vezes
+                    console.log(`Retrying playExpression for "${text}" (Attempt ${retryCount + 1})...`);
+                    setTimeout(() => playExpression(text, buttonId, retryCount + 1), 1000);
+                } else {
+                    alert("Desculpe, não foi possível reproduzir o áudio. Tente novamente mais tarde.");
+                    if (button) {
+                        button.disabled = false;
+                        button.textContent = '▶️';
+                    }
+                }
+            }
+        }
+
+        // Expor playExpression ao escopo global para uso em onclick
+        window.playExpression = playExpression;
+
+        // Função para alternar a tradução do diálogo
+        function toggleTranslation(id) {
+            const translationElement = document.getElementById(`translation-${id}`);
+            if (translationElement) {
+                translationElement.classList.toggle('hidden');
+            }
+        }
+        window.toggleTranslation = toggleTranslation; // Expor ao escopo global
+
+        // --- 4. LESSON RENDERING LOGIC ---
+        // Esta função agora é exposta globalmente para o onload do body e para a navegação
+        window.loadLesson = function(id) {
+            activeLessonId = id; // Atualiza a lição ativa
+            const data = LESSONS_DATA[id];
+            if (!data) {
+                document.getElementById('lesson-content').innerHTML = '<p class="text-red-500 text-center text-2xl">Lição não encontrada!</p>';
+                document.getElementById('app-title').textContent = 'RealTalk Daby (Corporate Edition) - Erro';
+                return;
+            }
+
+            // Atualiza o título da página
+            document.getElementById('app-title').textContent = `RealTalk Daby (Corporate Edition) - ${data.title}`;
+
+            // Atualiza o card de destaque
+            document.getElementById('card-expression').textContent = data.expression;
+            document.getElementById('card-meaning').textContent = `Significado: ${data.meaning_pt}`;
+            document.querySelector('#expression-card button').onclick = () => window.loadLesson(id); // Garante que o botão "Aprender Mais" do card leve à lição atual
+
+            // Atualiza o estado da navegação
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('bg-purple-600', 'text-white');
+                link.classList.add('bg-gray-700', 'text-purple-300', 'hover:bg-purple-500', 'hover:text-white');
+            });
+            const activeNavLink = document.getElementById(`nav-${id}`);
+            if (activeNavLink) {
+                activeNavLink.classList.remove('bg-gray-700', 'text-purple-300', 'hover:bg-purple-500', 'hover:text-white');
+                activeNavLink.classList.add('bg-purple-600', 'text-white');
+            }
+
+            const contentDiv = document.getElementById('lesson-content');
+            let html = '';
+
+            // Block 1: Expressão e Foco
+            html += `
+                <div class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+                    <h3 class="text-xl font-semibold text-purple-400 mb-3">🎯 1. Expressão e Foco</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        A expressão de hoje é: <span class="highlight text-3xl">${data.expression}</span>
+                        <button onclick="window.playExpression('${data.expression.replace(/'/g, "\\'")}', 'play-expression-btn')" id="play-expression-btn" class="ml-3 px-4 py-2 bg-purple-700 text-white rounded-full hover:bg-purple-800 transition duration-150">▶️ Ouvir</button>
+                    </p>
+                    <p class="text-gray-300 mt-2">
+                        Foco da lição: <span class="font-bold text-yellow-300">${data.focus}</span>
+                    </p>
+                </div>
+            `;
+
+            // Block 2: Significado e Tradução Literal
+            html += renderLessonBlock('📖 2. Significado e Tradução Literal', `
+                <p>Em português, significa: <span class="font-bold text-yellow-300">${data.meaning_pt}</span></p>
+                <p class="mt-2">Literalmente, seria: "${data.literal_translation}".</p>
+            `);
+
+            // Block 3: Contexto e Analogia Brasileira
+            html += renderLessonBlock('🇧🇷 3. Contexto e Analogia Brasileira', `
+                <p>${data.context_explanation}</p>
+                <p class="mt-2">Para nós, brasileiros, é como dizer: <span class="font-bold text-yellow-300">${data.brazilian_analogy}</span></p>
+            `);
+
+            // Block 4: Gramática e Erros Comuns
+            html += renderLessonBlock('📝 4. Gramática e Erros Comuns', `
+                <p><span class="font-bold text-yellow-300">Gramática:</span> ${data.grammar_focus}</p>
+                <p class="mt-2"><span class="font-bold text-yellow-300">Erro Comum:</span> ${data.common_mistake}</p>
+                <p class="mt-2"><span class="font-bold text-yellow-300">Como um nativo diria:</span> "${data.native_say}"</p>
+            `);
+
+            // Block 5: Real-Life Scenarios and Examples
+            html += renderExampleSentences(data.example_sentences);
+
+            // Block 6: Related Expressions and Synonyms
+            html += renderSynonyms(data.synonyms);
+
+            // Block 7: Gamification Exercise 1 (Vocabulary Recall - Fill-in-the-blank)
+            html += `
+                <div id="exercise-1" class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+                    <h4 class="text-2xl font-bold text-yellow-400 mb-3">🎮 7. Desafio de Vocabulário: Complete a Frase</h4>
+                    <p class="text-gray-300 mb-4">${data.gamification_question}</p>
+                    <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                        <input type="text" id="recall-input-${data.id}" class="flex-grow p-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-4 focus:ring-purple-500 transition duration-150" placeholder="Sua resposta aqui...">
+                        <button onclick="window.checkRecallAnswer('${data.id}', 'recall', '${data.gamification_answer.replace(/'/g, "\\'")}', '${data.gamification_hint.replace(/'/g, "\\'")}')" class="px-8 py-3 bg-purple-600 text-white font-extrabold rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-md">Verificar</button>
+                    </div>
+                    <p id="recall-feedback-${data.id}" class="mt-4 text-lg font-semibold"></p>
+                </div>
+            `;
+
+            // Block 8: Interactive Mini-Dialogue
+            if (data.dialogue) {
+                html += renderDialogueBlock(data.dialogue, data.id);
+            }
+
+            // Block 9: Gamification Exercise 2 (Contextual Match - Multiple Choice)
+            const matchOptionsHtml = data.contextual_match.options.map((option, index) => {
+                return `
+                    <button onclick="window.checkMatch('${data.id}', 'match', ${index}, ${option.correct})" 
+                            class="option-button w-full text-left px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition duration-200">
+                        ${htmlspecialchars(option.text)}
+                    </button>
+                `;
+            }).join('');
+
+            html += `
+                <div id="exercise-2" class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+                    <h4 class="text-2xl font-bold text-yellow-400 mb-3">🧠 9. Desafio de Contexto: Escolha a Melhor Situação</h4>
+                    <p class="text-gray-300 mb-4">${data.contextual_match.question}</p>
+                    <div class="space-y-3">
+                        ${matchOptionsHtml}
+                    </div>
+                    <p id="match-feedback-${data.id}" class="mt-4 text-lg font-semibold"></p>
+                </div>
+            `;
+
+            // Block 10: Curiosities and Origin of the Expression
+            if (data.etymology) {
+                html += renderEtymologyBlock(data.etymology);
+            }
+
+            // Block 11: Gamification Exercise 3 (Creative Production)
+            html += `
+                <div id="exercise-3" class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+                    <h4 class="text-2xl font-bold text-yellow-400 mb-3">✍️ 12. Desafio de Produção: Crie Sua Própria Frase</h4>
+                    <p class="text-gray-300 mb-4">${data.production_prompt}</p>
+                    <textarea id="production-input-${data.id}" rows="3" class="w-full p-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-4 focus:ring-purple-500 transition duration-150" placeholder="Escreva sua frase em inglês aqui..."></textarea>
+                    <button onclick="window.submitProduction('${data.id}', 'production', '${data.expression.replace(/'/g, "\\'")}')" class="mt-4 w-full md:w-auto px-8 py-3 bg-purple-600 text-white font-extrabold rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-md">Verificar Frase</button>
+                    <p id="production-feedback-${data.id}" class="mt-4 text-lg font-semibold"></p>
+                </div>
+            `;
+
+            // Block 12: Gamification Exercise 4 (Scenario Application)
+            const scenarioEnglishQJson = json_encode($data['scenario_english_q']);
+            const scenarioEnglishAJson = json_encode($data['scenario_english_a']);
+            html += `
+                <div id="exercise-4" class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+                    <h4 class="text-2xl font-bold text-yellow-400 mb-3">💬 13. Desafio de Cenário: Responda em Inglês</h4>
+                    <p class="text-gray-300 mb-4">${data.scenario_english_q}</p>
+                    <textarea id="scenario-input-${data.id}" rows="3" class="w-full p-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-4 focus:ring-purple-500 transition duration-150" placeholder="Sua resposta em inglês usando a expressão..."></textarea>
+                    <button onclick="window.checkScenarioAnswer('${data.id}', 'scenario', '${data.expression.replace(/'/g, "\\'")}', ${scenarioEnglishAJson})" class="mt-4 w-full md:w-auto px-8 py-3 bg-purple-600 text-white font-extrabold rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-md">Verificar Resposta</button>
+                    <p id="scenario-feedback-${data.id}" class="mt-4 text-lg font-semibold"></p>
+                </div>
+            `;
+
+            // Block 13 & 14: Gamification Exercise 5 & 6 (Translation Challenges)
+            const translation1QJson = json_encode($data['translation_challenge_1_q']);
+            const translation1AnswerJson = json_encode($data['translation_challenge_1_a']);
+            const translation2QJson = json_encode($data['translation_challenge_2_q']);
+            const translation2AnswerJson = json_encode($data['translation_challenge_2_a']);
+
+            html += `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Translation Challenge 1 -->
+                    <div id="exercise-5" class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+                        <h4 class="text-2xl font-bold text-yellow-400 mb-3">📝 14. Desafio de Tradução 1</h4>
+                        <p class="text-gray-300 mb-4">${data.translation_challenge_1_q}</p>
+                        <textarea id="translation-input-1-${data.id}" rows="3" class="w-full p-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-4 focus:ring-purple-500 transition duration-150" placeholder="Sua tradução em inglês usando a expressão..."></textarea>
+                        <button onclick="window.checkTranslationAnswer('${data.id}', 'translation-1', 1, '${data.expression.replace(/'/g, "\\'")}', ${translation1AnswerJson})" class="mt-4 w-full md:w-auto px-8 py-3 bg-teal-600 text-white font-extrabold rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-md">Verificar Tradução</button>
+                        <p id="translation-feedback-1-${data.id}" class="mt-4 text-lg font-semibold"></p>
+                    </div>
+
+                    <!-- Translation Challenge 2 -->
+                    <div id="exercise-6" class="lesson-block bg-gray-800 p-6 rounded-xl shadow-lg mb-6 border border-gray-700">
+                        <h4 class="text-2xl font-bold text-yellow-400 mb-3">📝 15. Desafio de Tradução 2</h4>
+                        <p class="text-gray-300 mb-4">${data.translation_challenge_2_q}</p>
+                        <textarea id="translation-input-2-${data.id}" rows="3" class="w-full p-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-4 focus:ring-purple-500 transition duration-150" placeholder="Sua tradução em inglês usando a expressão..."></textarea>
+                        <button onclick="window.checkTranslationAnswer('${data.id}', 'translation-2', 2, '${data.expression.replace(/'/g, "\\'")}', ${translation2AnswerJson})" class="mt-4 w-full md:w-auto px-8 py-3 bg-teal-600 text-white font-extrabold rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-md">Verificar Tradução</button>
+                        <p id="translation-feedback-2-${data.id}" class="mt-4 text-lg font-semibold"></p>
+                    </div>
+                </div>
+            `;
+
+            // Block 15: Desafios Diários (NEW)
+            html += renderDailyChallengeBlock(data.id);
+
+            contentDiv.innerHTML = html;
+
+            // Atualiza o texto da expressão no desafio diário
+            document.getElementById(`challenge-expression-${data.id}`).textContent = data.expression;
+            // Atualiza o estado do botão do desafio diário
+            updateDailyChallengeButtonState(data.id);
+        };
+
+
+        // --- 5. QUIZ LOGIC (With new feedback effects and Firestore integration) ---
+
+        // Helper function for cleaning and normalization
+        function normalizeString(str) {
+            return str.trim().toLowerCase().replace(/['"`!?,.;]/g, '');
+        }
+
+        // Helper to apply success animation
+        function applySuccessFeedback(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.classList.add('confetti-flash');
+                setTimeout(() => element.classList.remove('confetti-flash'), 400);
+            }
+        }
+
+        // Helper to apply error animation
+        function applyErrorFeedback(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.classList.add('shake');
+                setTimeout(() => element.classList.remove('shake'), 500);
+            }
+        }
+
+        // Função utilitária para registrar a conclusão do quiz e dar pontos
+        async function markQuizComplete(lessonId, quizType, points, isMastered) {
+            const quizId = `${quizType}-${lessonId}`;
+
+            // Checa se o quiz já foi completado (localmente)
+            if (masteredLessons[quizId]) {
+                return false; // Já completado, não adiciona pontos
+            }
+
+            // Atualiza Firestore para dar pontos e registrar o quiz como masterizado
+            await updateProgress(points, quizId, isMastered);
+
+            // Retorna true indicando que o ponto foi contabilizado
+            return true;
+        }
+
+        // 5.1 Check Recall Answer (Fill-in-the-blank)
+        async function checkRecallAnswer(lessonId, quizType, correctAnswer, hint) {
+            const quizId = `${quizType}-${lessonId}`;
+            const input = document.getElementById(`recall-input-${lessonId}`);
+            const feedback = document.getElementById(`recall-feedback-${lessonId}`);
+
+            if (masteredLessons[quizId]) {
+                feedback.innerHTML = `✅ Correto. Você já ganhou os ${POINTS_PER_QUIZ} pontos por este exercício.`;
+                feedback.classList.add('text-green-400');
+                return;
+            }
+
+            feedback.className = 'mt-4 text-lg font-semibold';
+            const userAnswer = normalizeString(input.value);
+            const correctText = correctAnswer.toUpperCase();
+
+            const acceptedAnswers = [normalizeString(correctAnswer)];
+            if (!correctAnswer.includes(' ')) {
+                acceptedAnswers.push(`i am ${normalizeString(correctAnswer)}`);
+                acceptedAnswers.push(`i'm ${normalizeString(correctAnswer)}`);
+            }
+
+            if (acceptedAnswers.includes(userAnswer)) {
+                await markQuizComplete(lessonId, quizType, POINTS_PER_QUIZ, true);
+                feedback.innerHTML = `🎉 **Perfect!** Você lembrou da expressão principal! (+${POINTS_PER_QUIZ} Pontos)`;
+                feedback.classList.add('text-green-400');
+                applySuccessFeedback(input.id);
+            } else {
+                let attempts = parseInt(input.dataset.attempts || 0) + 1;
+                input.dataset.attempts = attempts;
+
+                let feedbackText = '';
+
+                if (attempts >= 3) {
+                    feedbackText = `❌ Muitas tentativas. A resposta correta é: "${correctText}".`;
+                    input.value = '';
+                    input.dataset.attempts = 0;
+                    feedback.classList.add('text-red-500');
+                } else {
+                    feedbackText = `🤔 Tente novamente. Dica: ${hint}`;
+                    feedback.classList.add('text-yellow-400');
+                }
+
+                feedback.innerHTML = feedbackText;
+                applyErrorFeedback(input.id);
+            }
+        }
+        window.checkRecallAnswer = checkRecallAnswer; // Expor ao escopo global
+
+        // 5.2 Check Contextual Match (Multiple Choice)
+        async function checkMatch(lessonId, quizType, selectedIndex, isCorrect) {
+            const quizId = `${quizType}-${lessonId}`;
+            const feedback = document.getElementById(`match-feedback-${lessonId}`);
+            feedback.className = 'mt-4 text-lg font-semibold';
+
+            const optionsContainer = document.querySelector(`#exercise-2 .space-y-3`);
+            optionsContainer.querySelectorAll('button').forEach((btn, index) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-gray-600', 'option-button', 'hover:scale-105');
+                if (index === selectedIndex) {
+                    btn.classList.remove('bg-gray-700');
+                    if (isCorrect) {
+                        btn.classList.add('correct-answer', 'confetti-flash');
+                    } else {
+                        btn.classList.add('incorrect-answer', 'shake');
+                    }
+                } else if (LESSONS_DATA[lessonId].contextual_match.correct_index === index) {
+                    btn.classList.add('correct-answer', 'opacity-50');
+                }
+            });
+
+            if (isCorrect) {
+                if (await markQuizComplete(lessonId, quizType, POINTS_PER_QUIZ, true)) {
+                    feedback.innerHTML = `✅ **Excelente!** O contexto de uso está correto. (+${POINTS_PER_QUIZ} Pontos)`;
+                } else {
+                    feedback.innerHTML = `✅ **Excelente!** O contexto de uso está correto.`;
+                }
+                feedback.classList.add('text-green-400');
+            } else {
+                feedback.innerHTML = '❌ **Quase lá!** A expressão é usada para indicar a situação de **maior cansaço/sono**.';
+                feedback.classList.add('text-red-500');
+            }
+        }
+        window.checkMatch = checkMatch; // Expor ao escopo global
+
+        // 5.3 Submit Production Sentence
+        async function submitProduction(lessonId, quizType, expression) {
+            const quizId = `${quizType}-${lessonId}`;
+            const input = document.getElementById(`production-input-${lessonId}`);
+            const feedback = document.getElementById(`production-feedback-${lessonId}`);
+            const sentence = input.value.trim();
+
+            if (masteredLessons[quizId]) {
+                feedback.innerHTML = `✅ Sua frase parece boa. Você já ganhou os ${POINTS_PER_QUIZ} pontos por este exercício.`;
+                feedback.classList.add('text-green-400');
+                return;
+            }
+
+            feedback.className = 'mt-4 text-lg font-semibold';
+
+            if (sentence.length < 5) {
+                feedback.innerHTML = '⚠️ **Por favor, escreva uma frase completa.**';
+                feedback.classList.add('text-yellow-400');
+                applyErrorFeedback(input.id);
+                return;
+            }
+
+            const expressionLower = normalizeString(expression);
+            const lowerSentence = normalizeString(sentence);
+
+            let isUsed = lowerSentence.includes(expressionLower) || (expressionLower === 'i am beat' && lowerSentence.includes('beat')) || (expressionLower === "i'm hitting the hay" && lowerSentence.includes('hit the hay'));
+
+            if (isUsed) {
+                const ptWords = ['muito', 'o', 'a', 'de', 'para', 'eu', 'você', 'meu', 'minha', 'um', 'uma', 'uns', 'umas', 'e', 'mas', 'ou', 'se', 'não', 'sim', 'com', 'sem', 'em', 'no', 'na', 'nos', 'nas', 'por', 'para', 'de', 'do', 'da', 'dos', 'das', 'entre', 'sobre', 'sob', 'após', 'antes', 'até', 'desde', 'durante', 'contra', 'perante', 'atrás', 'frente', 'dentro', 'fora', 'acima', 'abaixo', 'perto', 'longe', 'aqui', 'ali', 'lá', 'onde', 'quando', 'como', 'porque', 'portanto', 'entretanto', 'todavia', 'contudo', 'assim', 'também', 'ainda', 'já', 'sempre', 'nunca', 'quase', 'apenas', 'só', 'muito', 'pouco', 'mais', 'menos', 'melhor', 'pior', 'bom', 'boa', 'mal', 'bem', 'grande', 'pequeno', 'novo', 'velho', 'certo', 'errado', 'feliz', 'triste', 'bonito', 'feio', 'rápido', 'lento', 'fácil', 'difícil', 'claro', 'escuro', 'quente', 'frio', 'cheio', 'vazio', 'aberto', 'fechado', 'limpo', 'sujo', 'forte', 'fraco', 'alto', 'baixo', 'rico', 'pobre', 'jovem', 'velho']; // Lista mais abrangente de palavras em português
+                let errorFound = ptWords.some(word => lowerSentence.includes(word));
+
+                let guidance = '';
+                if (await markQuizComplete(lessonId, quizType, POINTS_PER_QUIZ, true)) {
+                    guidance = `👍 **Ótimo uso!** Sua frase é natural e usa a expressão no contexto correto. (+${POINTS_PER_QUIZ} Pontos)`;
+                } else {
+                    guidance = '👍 **Ótimo uso!** Sua frase é natural e usa a expressão no contexto correto.';
+                }
+
+                if (errorFound) {
+                    guidance += '<br><span class="text-yellow-300">💡 **Pequena Revisão:** Encontrei algumas palavras que parecem ser de português. Verifique se sua frase é 100% em inglês.</span>';
+                    feedback.classList.add('text-yellow-400');
+                    applySuccessFeedback(input.id); // Ainda é um sucesso, mas com um aviso
+                } else {
+                    guidance += '<br><span class="text-green-300">✅ **Feedback Gramatical Básico:** A estrutura da frase parece correta e a pontuação é boa. Parabéns!</span>';
+                    feedback.classList.add('text-green-400');
+                    applySuccessFeedback(input.id);
+                }
+
+                feedback.innerHTML = guidance;
+
+            } else {
+                feedback.innerHTML = `❌ **Revise sua frase.** A expressão ("${expression}") não parece ter sido incluída. Tente novamente!`;
+                feedback.classList.add('text-red-500');
+                applyErrorFeedback(input.id);
+            }
+        }
+        window.submitProduction = submitProduction; // Expor ao escopo global
+
+        // 5.4 Check Scenario Answer
+        async function checkScenarioAnswer(lessonId, quizType, expression, expectedAnswer) {
+            const quizId = `${quizType}-${lessonId}`;
+            const input = document.getElementById(`scenario-input-${lessonId}`);
+            const feedback = document.getElementById(`scenario-feedback-${lessonId}`);
+            const userAnswer = normalizeString(input.value);
+            const expressionLower = normalizeString(expression);
+            const expectedText = expectedAnswer;
+
+            if (masteredLessons[quizId]) {
+                feedback.innerHTML = `✅ Correto. Você já ganhou os ${POINTS_PER_QUIZ} pontos por este exercício. Exemplo: <span class="text-green-300 italic">"${expectedText}"</span>.`;
+                feedback.classList.add('text-green-400');
+                return;
+            }
+
+            feedback.className = 'mt-4 text-lg font-semibold';
+
+            if (input.value.length < 10) {
+                feedback.innerHTML = '⚠️ Por favor, escreva uma resposta completa à situação.';
+                feedback.classList.add('text-yellow-400');
+                applyErrorFeedback(input.id);
+                return;
+            }
+
+            if (userAnswer.includes(expressionLower) || (expressionLower === 'i am beat' && userAnswer.includes('beat'))) {
+                if (await markQuizComplete(lessonId, quizType, POINTS_PER_QUIZ, true)) {
+                    feedback.innerHTML = `🎉 **Resposta Excelente!** Você aplicou a expressão corretamente no cenário. Exemplo de resposta: <span class="text-green-300 italic">"${expectedText}"</span>. (+${POINTS_PER_QUIZ} Pontos)`;
+                } else {
+                    feedback.innerHTML = `🎉 **Resposta Excelente!** Você aplicou a expressão corretamente no cenário. Exemplo de resposta: <span class="text-green-300 italic">"${expectedText}"</span>.`;
+                }
+                feedback.classList.add('text-green-400');
+                applySuccessFeedback(input.id);
+            } else {
+                feedback.innerHTML = `❌ **Quase lá.** Sua resposta não contém a expressão "${expression}". Lembre-se, o objetivo é usá-la.`;
+                feedback.classList.add('text-red-500');
+                applyErrorFeedback(input.id);
+            }
+        }
+        window.checkScenarioAnswer = checkScenarioAnswer; // Expor ao escopo global
+
+        // 5.5 & 5.6 Check Translation Answer
+        async function checkTranslationAnswer(lessonId, quizType, challengeNumber, expression, expectedTranslation) {
+            const quizId = `${quizType}-${challengeNumber}-${lessonId}`; // quizType agora inclui o challengeNumber
+            const input = document.getElementById(`translation-input-${challengeNumber}-${lessonId}`);
+            const feedback = document.getElementById(`translation-feedback-${challengeNumber}-${lessonId}`);
+            const userAnswer = normalizeString(input.value);
+            const expressionLower = normalizeString(expression);
+            const expectedText = expectedTranslation;
+
+            if (masteredLessons[quizId]) {
+                feedback.innerHTML = `✅ Correto. Você já ganhou os ${POINTS_PER_QUIZ} pontos por este exercício. Exemplo: <span class="text-green-300 italic">"${expectedText}"</span>.`;
+                feedback.classList.add('text-green-400');
+                return;
+            }
+
+            feedback.className = 'mt-4 text-lg font-semibold';
+
+            if (input.value.length < 10) {
+                feedback.innerHTML = '⚠️ Por favor, escreva a tradução completa.';
+                feedback.classList.add('text-yellow-400');
+                applyErrorFeedback(input.id);
+                return;
+            }
+
+            if (userAnswer.includes(expressionLower) || (expressionLower === 'i am beat' && userAnswer.includes('beat'))) {
+                if (await markQuizComplete(lessonId, quizType, POINTS_PER_QUIZ, true)) {
+                    feedback.innerHTML = `🎉 **Tradução Correta!** Você usou a expressão no contexto da frase. Uma tradução ideal seria: <span class="text-green-300 italic">"${expectedText}"</span>. (+${POINTS_PER_QUIZ} Pontos)`;
+                } else {
+                    feedback.innerHTML = `🎉 **Tradução Correta!** Você usou a expressão no contexto da frase. Uma tradução ideal seria: <span class="text-green-300 italic">"${expectedText}"</span>.`;
+                }
+                feedback.classList.add('text-green-400');
+                applySuccessFeedback(input.id);
+            } else {
+                feedback.innerHTML = `❌ **Tradução Incorreta.** Sua frase em inglês não contém a expressão "${expression}". Reveja a seção de significado!`;
+                feedback.classList.add('text-red-500');
+                applyErrorFeedback(input.id);
+            }
+        }
+        window.checkTranslationAnswer = checkTranslationAnswer; // Expor ao escopo global
+
+        // 5.7 Daily Challenge Completion
+        async function completeChallenge(lessonId) {
+            const quizId = `daily-challenge-${lessonId}`;
+            const input = document.getElementById(`challenge-input-${lessonId}`);
+            const feedback = document.getElementById(`challenge-feedback-${lessonId}`);
+            const button = document.getElementById(`complete-challenge-button-${lessonId}`);
+            const challengeText = input.value.trim();
+
+            if (masteredLessons[quizId]) {
+                feedback.innerHTML = `✅ Você já concluiu esta missão e ganhou os ${POINTS_PER_CHALLENGE} pontos.`;
+                feedback.classList.add('text-green-400');
+                return;
+            }
+
+            if (challengeText.length < 20) { // Exige uma resposta mais elaborada
+                feedback.innerHTML = '⚠️ Por favor, descreva sua experiência com mais detalhes (mínimo 20 caracteres).';
+                feedback.classList.add('text-yellow-400');
+                applyErrorFeedback(input.id);
+                return;
+            }
+
+            // Simplesmente marca como completo e dá pontos, pois é um desafio de auto-relato
+            if (await markQuizComplete(lessonId, quizId, POINTS_PER_CHALLENGE, true)) {
+                feedback.innerHTML = `🎉 **Missão Concluída!** Parabéns por aplicar a expressão na vida real! (+${POINTS_PER_CHALLENGE} Pontos)`;
+                feedback.classList.add('text-green-400');
+                applySuccessFeedback(button.id);
+                button.disabled = true;
+                button.textContent = 'Missão Concluída! ✅';
+            } else {
+                feedback.innerHTML = `✅ Você já concluiu esta missão e ganhou os ${POINTS_PER_CHALLENGE} pontos.`;
+                feedback.classList.add('text-green-400');
+            }
+        }
+        window.completeChallenge = completeChallenge; // Expor ao escopo global
+
+        // Função para atualizar o estado do botão do desafio diário
+        function updateDailyChallengeButtonState(lessonId) {
+            const quizId = `daily-challenge-${lessonId}`;
+            const button = document.getElementById(`complete-challenge-button-${lessonId}`);
+            const feedback = document.getElementById(`challenge-feedback-${lessonId}`);
+
+            if (button) {
+                if (masteredLessons[quizId]) {
+                    button.disabled = true;
+                    button.textContent = 'Missão Concluída! ✅';
+                    feedback.innerHTML = `✅ Você já concluiu esta missão e ganhou os ${POINTS_PER_CHALLENGE} pontos.`;
+                    feedback.classList.add('text-green-400');
+                } else {
+                    button.disabled = false;
+                    button.textContent = 'Concluir Missão (+50 Pontos)';
+                    feedback.innerHTML = ''; // Limpa feedback se não estiver completo
+                }
+            }
+        }
+
+        // Carrega a lição 1 assim que o DOM estiver pronto e o Firebase setup for concluído
+        // A chamada inicial de loadLesson(1) no body.onload foi substituída por esta lógica
+        // para garantir que o Firebase esteja pronto antes de tentar carregar o progresso.
+        document.addEventListener('DOMContentLoaded', () => {
+            // setupFirebase() já é chamado, e ele chama loadLesson(activeLessonId) após autenticação.
+            // Isso garante que a lição seja carregada com o progresso do usuário.
+        });
+
+    </script>
+</body>
+</html>
